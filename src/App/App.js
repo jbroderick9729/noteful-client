@@ -15,7 +15,6 @@ class App extends Component {
   state = {
     notes: [],
     folders: [],
-    deleteNote: this.deleteNote
   };
 
   componentDidMount() {

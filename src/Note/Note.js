@@ -10,8 +10,7 @@ class Note extends React.Component {
   static contextType = AppContext
 
   render() {
-    console.log('notes context', this.context)
-    console.log('notes prop', this.props)
+    
     return (
       <div className='Note'>
         <h2 className='Note__title'>

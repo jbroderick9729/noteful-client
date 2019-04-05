@@ -7,7 +7,6 @@ import './NotePageNav.css'
 class NotePageNav extends React.Component {
 
   render() {
-    console.log(this.context)
     return (
       <div className='NotePageNav'>
         <CircleButton
