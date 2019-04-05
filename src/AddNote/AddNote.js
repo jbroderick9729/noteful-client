@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import NotefulForm from '../NotefulForm/NotefulForm'
 import './AddNote.css'
 import AppContext from '../AppContext/AppContext'
+import PropTypes from 'prop-types'
 
 export default class AddNote extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class AddNote extends Component {
         folderId: ''
     }
   }
+
 
   static contextType = AppContext
 
@@ -86,7 +88,7 @@ export default class AddNote extends Component {
             <label htmlFor='note-name-input'>
               Name
             </label>
-            <input type='text' id='note-name-input' onChange={e => this.updateName(e.target.value)}/>
+            <input type='text' id='note-name-input' onChange={e => this.updateName(e.target.value)} />
           </div>
           <div className='field'>
             <label htmlFor='note-content-input'>
@@ -116,4 +118,8 @@ export default class AddNote extends Component {
       </section>
     )
   }
+}
+
+AddNote.propTypes = {
+  name: PropTypes.string.isRequired
 }

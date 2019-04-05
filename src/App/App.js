@@ -10,6 +10,7 @@ import AddNote from '../AddNote/AddNote'
 import AppContext from '../AppContext/AppContext'
 import { getNotesForFolder, findNote, findFolder } from '../notes-helpers'
 import './App.css'
+import SomeError from '../SomeError/SomeError';
 
 class App extends Component {
   state = {
@@ -18,6 +19,7 @@ class App extends Component {
   };
 
   componentDidMount() {
+    
     fetch('http://localhost:9090/folders')
     .then(data => data.json())
     .then(folders => this.setState({
@@ -33,7 +35,6 @@ class App extends Component {
   }
 
   renderNavRoutes() {
-
     const { notes, folders } = this.state
     return (
       <>
@@ -165,7 +166,9 @@ class App extends Component {
       <AppContext.Provider value={contextValue}>
       <div className='App'>
         <nav className='App__nav'>
-          {this.renderNavRoutes()}
+          <SomeError>
+            {this.renderNavRoutes()}
+          </SomeError>
         </nav>
         <header className='App__header'>
           <h1>
@@ -175,7 +178,9 @@ class App extends Component {
           </h1>
         </header>
         <main className='App__main'>
-          {this.renderMainRoutes()}
+          <SomeError>
+            {this.renderMainRoutes()}
+          </SomeError>
         </main>
       </div>
       </AppContext.Provider>
