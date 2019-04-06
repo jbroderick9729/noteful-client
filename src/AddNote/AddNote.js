@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import NotefulForm from '../NotefulForm/NotefulForm'
+import { Redirect } from 'react-router-dom';
 import './AddNote.css'
 import AppContext from '../AppContext/AppContext'
 import PropTypes from 'prop-types'
@@ -12,7 +13,8 @@ export default class AddNote extends Component {
         id: '',
         modified: '',
         content: '',
-        folderId: ''
+        folderId: '',
+        fireRedirect: false
     }
   }
 
@@ -28,6 +30,7 @@ export default class AddNote extends Component {
       "content": this.state.content,
       "folderId": this.state.folderId
     }
+    this.setState({ fireRedirect: true })
 
     const url ='http://localhost:9090/notes'
     const options = {
@@ -45,14 +48,14 @@ export default class AddNote extends Component {
       }
       throw new Error('Note failed to post!')
     })
-    .then(alert('Note added!'))
+    .then(console.log('success'))
     .catch(err => console.log(err))
   }
 
 
   updateModified() {
     const today = new Date();
-    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();  
+    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T'+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds()+'.'+today.getMilliseconds()+'Z';  
 
     return date;
   }
@@ -79,7 +82,9 @@ export default class AddNote extends Component {
 
 
   render() {
-    const { folders } = this.context
+    const { folders } = this.context;
+    const { from } = this.props.location.state || '/'
+    const { fireRedirect } = this.state
     return (
       <section className='AddNote'>
         <h2>Create a note</h2>
@@ -115,6 +120,9 @@ export default class AddNote extends Component {
             </button>
           </div>
         </NotefulForm>
+        {fireRedirect && (
+          <Redirect to={from || '/'}/>
+        )}
       </section>
     )
   }

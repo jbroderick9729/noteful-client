@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import NotefulForm from '../NotefulForm/NotefulForm'
+import { Redirect } from 'react-router-dom';
 import './AddFolder.css'
 
 export default class AddFolder extends Component {
@@ -7,7 +8,8 @@ export default class AddFolder extends Component {
   constructor(props){
    super(props);
    this.state = {
-     folderName: ''
+     folderName: '',
+     fireRedirect: false
    }
  }
 
@@ -19,7 +21,8 @@ export default class AddFolder extends Component {
     })
   }
 
-  postFolderName = () => {
+  postFolderName = (e) => {
+    e.preventDefault();
     const folderName = this.state.folderName
     const id = folderName
 
@@ -27,6 +30,7 @@ export default class AddFolder extends Component {
       "id": id,
       "name": folderName
     }
+    this.setState({ fireRedirect: true })
 
     const url = 'http://localhost:9090/folders'
     const options = {
@@ -44,11 +48,13 @@ export default class AddFolder extends Component {
       }
       throw new Error('Something went wrong!')
     })
-    .then(alert('Folder added'))
+    .then(console.log('Folder added'))
     .catch(err => console.log(err))
   }
 
   render() {
+    const { from } = this.props.location.state || '/'
+    const { fireRedirect } = this.state
     return (
       <section className='AddFolder'>
         <h2>Create a folder</h2>
@@ -65,6 +71,9 @@ export default class AddFolder extends Component {
             </button>
           </div>
         </NotefulForm>
+        {fireRedirect && (
+          <Redirect to={from || '/'}/>
+        )}
       </section>
     )
   }
