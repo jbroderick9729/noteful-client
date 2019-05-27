@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "alias": "kylerjuliemengqi-noteful-app",
+  "name": "kjm-noteful-app",
+  "routes": [
+    {
+      "src": "^/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": ".*",
+      "dest": "/index.html"
+    }
+  ]
+}
